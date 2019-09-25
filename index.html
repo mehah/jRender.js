@@ -1,0 +1,22 @@
+<html>
+<link rel="stylesheet" href="styles.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="jRender.js"></script>
+<script>
+  $(function () {
+    var componentTeste = ComponentFactory.create('component')
+    componentTeste.appendTo($('#content'), function (c) {});
+
+    $('#destroyComponent').on('click', function () {
+      componentTeste.destroy();
+      $(this).remove();
+    });
+  });
+</script>
+
+<body>
+  <div id="content"></div>
+  <button type="button" id="destroyComponent">Destroy component</button>
+</body>
+
+</html>
