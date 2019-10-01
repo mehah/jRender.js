@@ -1,42 +1,43 @@
 <script>
-    $Component('teste', function () {
-        this.onInit = function () {
+    class TesteComponent {
+        onInit() {
             console.log('Component Initialized', this);
         }
 
-        this.isChecked = function (e) {
+        isChecked(e) {
             return e.isDirty || e.isTouched;
-        };
+        }
 
-        this.isEmpty = function (e) {
+        isEmpty(e) {
             return e.value.trim().length === 0;
         }
 
-        this.formIsValid = function () {
+        formIsValid() {
             return this.form.isDirty && !this.isEmpty(this.name) && !this.isEmpty(this.age);
-        };
+        }
 
-        this.onClickRegister = function () {
+        onClickRegister() {
             alert('Name: ' + this.name.value + ', Age: ' + this.age.value);
-        };
+        }
 
-        this.randomColor = function (e) {
+        randomColor(e) {
             return ['blue', 'red', 'yellow', 'green'][Math.floor(Math.random() * 5)];
         }
 
-        this.onlyNumber = function (e) {
+        onlyNumber(e) {
             if (!(/^\d*$/.test(e.key))) {
                 e.preventDefault();
             }
         }
-    });
+    };
 </script>
-<div>
+<component name="teste" controller="TesteComponent">
     <form #name="form">
         <div>
             <label class.has-error="isChecked(name) && isEmpty(name)">Name</label>
             <input type="text" #name="name" />
-            (<label>Clone Sample</label>: <input type="text" #name="nameClone" attr.value="name.value" disabled css.color="randomColor(nameClone)" />)
+            (<label>Clone Sample</label>: <input type="text" #name="nameClone" attr.value="name.value" disabled
+                style.color="randomColor(nameClone)" />)
         </div>
         <div if="!isEmpty(name)">
             <label>Age</label>
@@ -45,7 +46,7 @@
         <br />
         <div>
             <button type="button" prop.disabled="!formIsValid()" event.click="onClickRegister()">Register</button>
-            <button type="reset" event.click="ComponentFactory.checkModification(this)"
+            <button type="reset" event.click="jRender.component.checkModifications(this)"
                 title="Verification after click is required! If you want to understand why, remove the event.click attribute from this element.">Default
                 Reset</button>
             <button type="button" event.click="form.reset()">Reset on Event</button>
@@ -54,10 +55,10 @@
         <br />
         <div>
             <div>[Data String]</div>
-            <div><label>Name</label>: <span $html="JSON.stringify(name.value)"></span></div>
-            <div><label>Age</label>: <span $html="JSON.stringify(age.value)"></span></div>
-            <div><label>Form is Dirty</label>: <span $html="JSON.stringify(form.isDirty) || 'false'"></span></div>
-            <div><label>Form is Valid</label>: <span $html="JSON.stringify(formIsValid())"></span></div>
+            <div><label>Name</label>: <span prop.innerHtml="JSON.stringify(name.value)"></span></div>
+            <div><label>Age</label>: <span prop.innerHtml="JSON.stringify(age.value)"></span></div>
+            <div><label>Form is Dirty</label>: <span prop.innerHtml="JSON.stringify(form.isDirty) || 'false'"></span></div>
+            <div><label>Form is Valid</label>: <span prop.innerHtml="JSON.stringify(formIsValid())"></span></div>
         </div>
     </form>
-</div>
+</component>

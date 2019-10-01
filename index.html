@@ -1,32 +1,21 @@
 <html>
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<!-- For github.io -->
-<link rel="stylesheet" rel="stylesheet" href="/jRender.js/styles.css">
-<script type="text/javascript" src="/jRender.js/jRender.js"></script>
-<!---->
-
-<!-- For DEV -->
-<link rel="stylesheet" rel="stylesheet" href="styles.css">
-<script type="text/javascript" src="jRender.js"></script>
-<!---->
-  
-<script>
-  $(function () {
-    var componentTeste = ComponentFactory.create('component')
-    componentTeste.appendTo($('#content'), function (c) {});
-
-    $('#destroyComponent').on('click', function () {
-      componentTeste.destroy();
-      $(this).remove();
-    });
-  });
-</script>
+<link rel="stylesheet" href="styles.css">
+<script src="jRender.js"></script>
 
 <body>
-  <div id="content"></div>
+  <div id="content">
+    <teste></teste>
+  </div>
   <button type="button" id="destroyComponent">Destroy component</button>
+
+  <script>
+    jRender.component.load('component.html').then(c => c.process(document.querySelector('#content')));
+
+    document.getElementById('destroyComponent').addEventListener('click', (e) => {
+      const teste = document.querySelector('teste');
+      if (teste) teste.destroy();
+    });
+  </script>
 </body>
 
 </html>
